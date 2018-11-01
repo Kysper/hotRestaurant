@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hot Restaurant - Express</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1><i class="fab fa-hotjar"></i> Hot Restaurant</h1>
+            <h3>We only have 5 tables! Book your seat before they all are gone!</h3>
+            <hr>
+
+            <a href="/reserve"><button id="make-reservations" class="btn btn-danger btn-lg"><i class="fas fa-edit"></i>Make Reservation</button></a>
+            <a href="/"><button id="go-home" class="btn btn-lg"><i class="fas fa-home"></i></button> </a>
+        </div>
+
+        <div class="row">
+
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Current Reservations</strong></h3>
+                    </div>
+                    <div class="card-body">
+                        <ul id="current-reservations-section" class="list-group">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Waiting List</strong></h3>
+                    </div>
+                    <div class="card-body">
+                        <ul id="waiting-list-section" class="list-group">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            // Client-side JavaScript
+
+            $.get("/api/tables", function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    console.log(data[i]);
+                    var listGroupItem = $("<li class='list-group-item'>");
+
+                    listGroupItem.append($("<h2>").text("ID: " + data[i].customerID));
+                    listGroupItem.append($("<h2>").text("Name: " + data[i].customerName));
+                    listGroupItem.append($("<h3>").text("Email: " + data[i].customerEmail));
+                    listGroupItem.append($("<h3>").text("Phone: " + data[i].phoneNumber));
+
+
+                    $("#current-reservations-section").append(listGroupItem);
+                }
+            });
+
+                   $.get("/api/waitlist", function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    console.log(data[i]);
+                    var listGroupItem = $("<li class='list-group-item'>");
+
+                    listGroupItem.append($("<h2>").text("ID: " + data[i].customerID));
+                    listGroupItem.append($("<h2>").text("Name: " + data[i].customerName));
+                    listGroupItem.append($("<h3>").text("Email: " + data[i].customerEmail));
+                    listGroupItem.append($("<h3>").text("Phone: " + data[i].phoneNumber));
+
+
+                    $("#waiting-list-section").append(listGroupItem);
+                }
+            });
+        </script>
+
+</body>
+
+</html>
