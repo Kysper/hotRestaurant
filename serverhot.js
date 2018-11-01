@@ -41,11 +41,14 @@ app.get("/api/waitList", function(req,res){
    app.post("/api/tables", function(req,res){
     var newCustomer = req.body;
     if(tables.length >= 5){
+        
         waitList.push(newCustomer);
         console.log(waitList.length);
+        return res.json(false);
     }else{
+        // alert("Your table is reserved!")
         tables.push(newCustomer);
-        res.json(newCustomer);
+        return res.json(true);
         console.log(tables.length);
     }
 });
